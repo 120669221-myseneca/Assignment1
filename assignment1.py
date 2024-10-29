@@ -3,8 +3,8 @@
 '''
 OPS435 Assignment 1 - Summer 2023
 Program: assignment1.py 
-Author: "Student Name"
-The python code in this file (a1_[Student_id].py) is original work written by
+Author: "Prince Dungrani"
+The python code in this file (a1_[120669221].py) is original work written by
 "Student Name". No code in this file is copied from any other source
 except those provided by the course instructor, including any person,
 textbook, or on-line resource. I have not shared this python script
@@ -28,6 +28,11 @@ def day_of_week(year: int, month: int, date: int) -> str:
 def mon_max(month:int, year:int) -> int:
     "returns the maximum day for a given month. Includes leap year check"
     ...
+    if month == 2:  # February
+        return 29 if leap_year(year) else 28
+    if month in [4, 6, 9, 11]:  # April, June, September, November
+        return 30
+    return 31
 
 def after(date: str) -> str:
     '''
@@ -44,11 +49,11 @@ def after(date: str) -> str:
     tmp_day = day + 1  # next day
 
     if tmp_day > mon_max(month, year):
-        to_day = tmp_day % mon_max(month, year)  # if tmp_day > this month's max, reset to 1 
+        to_day = 1  # if tmp_day > this month's max, reset to 1 
         tmp_month = month + 1
     else:
         to_day = tmp_day
-        tmp_month = month + 0
+        tmp_month = month
 
     if tmp_month > 12:
         to_month = 1
@@ -69,6 +74,7 @@ def usage():
 def leap_year(year: int) -> bool:
     "return True if the year is a leap year"
     ...
+    return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
 
 def valid_date(date: str) -> bool:
     "check validity of date and return True if valid"
@@ -80,3 +86,4 @@ def day_count(start_date: str, stop_date: str) -> int:
 
 if __name__ == "__main__":
     ...
+    print(after('2023-01-31'))
