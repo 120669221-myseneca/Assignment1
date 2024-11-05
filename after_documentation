@@ -1,0 +1,34 @@
+def after(date: str) -> str:
+    '''
+    after() -> purpose: return the next date of the user's input date.
+   
+    #spliting date into 3 parts.
+    str_year, str_month, str_day = date.split('-')
+  
+    # converting each parts into interger.
+    year = int(str_year)
+    month = int(str_month)
+    day = int(str_day)
+   
+    #next day 
+    tmp_day = day + 1  
+
+    # Checking if the total number of days are accordingly the month.
+    if tmp_day > mon_max(month, year):
+        to_day = 1  # reset to 1 if the next day exceeds the max day
+        tmp_month = month + 1
+    else:
+        to_day = tmp_day
+        tmp_month = month
+
+    # if the month is exceeding december, it will reset it to january.
+    if tmp_month > 12:
+        to_month = 1
+        year = year + 1
+    else:
+        to_month = tmp_month
+
+    # setting up the correct formet fot the date.
+    next_date = f"{year}-{to_month:02}-{to_day:02}"
+
+    return next_date
