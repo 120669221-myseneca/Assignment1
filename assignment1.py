@@ -14,7 +14,7 @@ violators will be reported and appropriate action will be taken.
 '''
 
 import sys
-
+from datetime import datetime
 def day_of_week(year: int, month: int, date: int) -> str:
     "Based on the algorithm by Tomohiko Sakamoto"
     days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] 
@@ -69,8 +69,7 @@ def after(date: str) -> str:
 def usage():
     "Print a usage message to the user"
     ...
-
-
+    
 def leap_year(year: int) -> bool:
     "return True if the year is a leap year"
     ...
@@ -79,11 +78,64 @@ def leap_year(year: int) -> bool:
 def valid_date(date: str) -> bool:
     "check validity of date and return True if valid"
     ...
+    print(f"Validating date: {date}")
+    try:
+        datetime.strptime(date, "%Y-%m-%d")
+
+        year, month, day = map(int, date.split('-'))
+        
+        if len(str(year)) != 4:  # year must be 4 digits or else will return false
+            return False
+        
+        if month < 1 or month > 12: # month must be >1 or < 12
+            return False
+        
+        if day < 1 or day > mon_max(month, year):
+            return False
+        return True
+    
+    except ValueError:
+        return False  
 
 def day_count(start_date: str, stop_date: str) -> int:
     "Loops through range of dates, and returns number of weekend days"
     ...
+    count = 0
+    current_date = start_date
+
+    while current_date <= stop_date:
+        year, month, day = map(int, current_date.split('-'))
+
+        day_of_week_result = day_of_week(year, month, day)
+
+        # print(f"Checking date: {current_date}, which is a {day_of_week_result}")
+        
+        if day_of_week_result == 'sat' or day_of_week_result == 'sun':
+            count += 1
+
+        current_date = after(current_date)
+
+
+    '''while True:
+        
+        if day_of_week(*map(int, current_date.split('-'))) in ['saturday', 'sunday']:
+            count += 1
+
+        
+        if current_date == stop_date:
+            break
+
+        
+        current_date = after(current_date)
+
+    
+    if day_of_week(*map(int, stop_date.split('-'))) in ['saturday', 'sunday']:
+        count += 1'''
+
+    return count
+
+
 
 if __name__ == "__main__":
     ...
-    print(after('2023-01-31'))
+   
