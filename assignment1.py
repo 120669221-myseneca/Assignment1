@@ -5,7 +5,7 @@ OPS435 Assignment 1 - Summer 2023
 Program: assignment1.py 
 Author: "Prince Dungrani"
 The python code in this file (a1_[120669221].py) is original work written by
-"Student Name". No code in this file is copied from any other source
+"Prince Dungrani". No code in this file is copied from any other source
 except those provided by the course instructor, including any person,
 textbook, or on-line resource. I have not shared this python script
 with anyone or anything except for submission for grading. I understand
@@ -13,8 +13,11 @@ that the Academic Honesty Policy will be enforced and
 violators will be reported and appropriate action will be taken.
 '''
 
+# importing functions and libraries.
+
 import sys
 from datetime import datetime
+
 def day_of_week(year: int, month: int, date: int) -> str:
     "Based on the algorithm by Tomohiko Sakamoto"
     days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] 
@@ -69,6 +72,8 @@ def after(date: str) -> str:
 def usage():
     "Print a usage message to the user"
     ...
+    print("Usage: python3 assignment1.py <startdate> <enddate>")
+    sys.exit(1)
     
 def leap_year(year: int) -> bool:
     "return True if the year is a leap year"
@@ -108,7 +113,7 @@ def day_count(start_date: str, stop_date: str) -> int:
 
         day_of_week_result = day_of_week(year, month, day)
 
-        # print(f"Checking date: {current_date}, which is a {day_of_week_result}")
+        
         
         if day_of_week_result == 'sat' or day_of_week_result == 'sun':
             count += 1
@@ -116,26 +121,47 @@ def day_count(start_date: str, stop_date: str) -> int:
         current_date = after(current_date)
 
 
-    '''while True:
-        
-        if day_of_week(*map(int, current_date.split('-'))) in ['saturday', 'sunday']:
-            count += 1
-
-        
-        if current_date == stop_date:
-            break
-
-        
-        current_date = after(current_date)
-
-    
-    if day_of_week(*map(int, stop_date.split('-'))) in ['saturday', 'sunday']:
-        count += 1'''
-
     return count
 
+# to compare date in main function, if user enters date incorrectly, it will swap the dates.
+
+def dates_compare(start: str, end: str) -> tuple:
+    ''' corrects the date formet'''
+    start_date = datetime.strptime(start, "%Y-%m-%d")
+    end_date = datetime.strptime(end, "%Y-%m-%d")
+    
+    if start_date > end_date:
+        return end, start
+    return start, end
+    
+
+
+def main_block():
+    '''this functions is created because i can use the variables from above functions and is a good practice for object-oriented programming. 
+    later on, i will call this function in main function'''
+    # checking if user has entered argumnets correctly
+    if len(sys.argv) != 3:
+        usage()
+
+    start_date = sys.argv[1]
+    end_date = sys.argv[2]
+
+    # calling valid_dates function ot check the dates
+    if not valid_date(start_date) or not valid_date(end_date):
+        print("Invalid date format. Please ensure both dates are in the format YYYY-MM-DD.")
+        usage()
+
+    # swaping dates 
+    start_date, end_date = dates_compare(start_date, end_date)
+
+    # calling day_count function to calculate function.
+    weekends = day_count(start_date, end_date)
+    print(f"The period between {start_date} and {end_date} includes {weekends} weekend days")
 
 
 if __name__ == "__main__":
     ...
+    #calling main block function.
+    main_block()
+ 
    
